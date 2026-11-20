@@ -1,0 +1,3 @@
+import {NextResponse} from "next/server";
+export const runtime="nodejs";
+export async function POST(req){try{const {link_id}=await req.json();if(typeof link_id!=="string")return NextResponse.json({ok:false},{status:400});const u=process.env.NEXT_PUBLIC_SUPABASE_URL,k=process.env.SUPABASE_SECRET_KEY;if(!u||!k)return NextResponse.json({ok:false},{status:202});const r=await fetch(u+"/rest/v1/click_events",{method:"POST",headers:{apikey:k,Authorization:"Bearer "+k,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({link_id,event_type:"click"})});return NextResponse.json({ok:r.ok},{status:202});}catch{return NextResponse.json({ok:false},{status:202});}}
